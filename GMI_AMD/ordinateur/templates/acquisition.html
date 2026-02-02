@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+    
+    
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Acquisition du matériel</h1>
+                        <a href="{% url 'PrintInventaire' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Imprimer le formulaire</a>
+                    </div>
+
+
+
+                </div>
+                <div class="container mt-5 col-8 rounded shadow">
+                    <h2 style="background-color: #4e73df; color: white; text-align: center;" >Formulaire de Soumission</h2>
+                    <form method="POST">
+                        {% csrf_token %}
+                       
+                        <div class="mb-3">
+                            <label for="marque" class="form-label">Marque</label>
+                            <input type="text" class="form-control" id="marque" name="marque" placeholder="Insérez la marque de votre ordinateur">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ram" class="form-label">Mémoire RAM</label>
+                            <input type="text" class="form-control" id="ram" name="ram" placeholder="Votre Ram">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="disque" class="form-label">Disque dur</label>
+                            <input type="text" class="form-control" id="disque" rows="3" name="disque" placeholder="Votre disque">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Processeur" class="form-label">Processeur</label>
+                            <input type="text" class="form-control" id="Processeur" name="Processeur" rows="3" placeholder="Votre disque">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ecran" class="form-label">Taille ecran</label>
+                            <input type="text" class="form-control" id="ecran" rows="3" name="ecran" placeholder="Votre disque">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="seri" class="form-label">Numero de série</label>
+                            <input type="text" class="form-control" id="seri" rows="3" name="seri" placeholder="Numero de serie">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date </label>
+                            <input type="date" class="form-control" id="date" name="date" placeholder="Date d'acquisition">
+                        </div>
+                       
+                        <button type="submit" class="btn btn-primary">Enregistre</button>
+                    </form>
+
+                   
+                </div>
+
+                
+
+
+                <div class="container mt-5">
+                    <h2 style="background-color: #4e73df; color: white; text-align: center;">Historique des acquisition</h2>
+                    <table class="table">
+                        <thead class="thead">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Marque</th>
+                                <th scope="col">Date acquisition</th>
+                                <th scope="col">Memoire Ram</th>
+                                <th scope="col">Disque dure</th>
+                                <th scope="col">Processeur</th>
+                                <th scope="col">Ecran</th>
+                                <th scope="col">Numéro de serie</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ord in ordinateur %}
+                            <tr>
+                                <th scope="row">{{ord.id}}</th>
+                                <td>{{ord.marque}}</td>
+                                <td>{{ord.dte_acquisition}}</td>
+                                <td>{{ord.ram}}</td>
+                                <td>{{ord.disque_dur}}</td>
+                                <td>{{ord.processeur}}</td>
+                                <td>{{ord.ecran}}</td>
+                                <td>{{ord.numero_serie}}</td>
+                            </tr>
+
+                            {% endfor %}
+                            
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+         
+            <!-- End of Main Content -->
+ {% endblock %}

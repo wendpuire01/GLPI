@@ -1,0 +1,142 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    
+
+
+
+</div>
+<div class="container mt-5 col-8 rounded shadow">
+    <h2 style="background-color: #4e73df; color: white; text-align: center;" >Formulaire d'enregistrement</h2>
+    <form method='post'>
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Nom</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Votre nom">
+        </div>
+        <div class="mb-3">
+            <label for="prenom" class="form-label">Prénoms</label>
+            <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Votre prenom">
+        </div>
+        <div class="mb-3">
+            <label for="tel" class="form-label">Téléphone</label>
+            <input type="text" class="form-control" id="tel" name="telephone" placeholder="Votre téléphone">
+        </div>
+        <div class="mb-3">
+            <label for="message" class="form-label">Département</label>
+            <select class="form-control" id="exampleSelect" name="departement">
+                <option>Direction</option>
+                <option>Direction Operationnel</option>
+                <option>Departement finance et compta</option>
+                <option>Departement SIDIA</option>
+                <option>Departement commercial</option>
+              </select>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Poste</label>
+            <input type="text" class="form-control" id="name" name="poste" placeholder="Votre poste">
+        </div>
+       
+        
+        
+        <button type="submit" class="btn btn-primary">Soumettre</button>
+    </form>
+</div>
+
+
+<div class="container mt-5">
+    <h2 style="background-color: #4e73df; color: white; text-align: center;">Liste du personnel enrégistré</h2>
+    <table class="table">
+        <thead class="thead">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prenom</th>
+                <th scope="col">Télephone</th>
+                <th scope="col">Département</th>
+                <th scope="col">Poste</th>
+                <th scope="col">ACTION</th>
+                
+            </tr>
+        </thead>
+        
+        <tbody>
+            {% for personne in personnes %}
+            <tr>
+                <th scope="row">{{personne.id}}</th>
+                <td>{{personne.nom}}</td>
+                <td>{{personne.prenom}}</td>
+                <td>{{personne.telephone}}</td>
+                <td>{{personne.departement}}</td>
+                <td>{{personne.poste}}</td>
+                <td>
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modifierModal{{ personne.id }}">Modifier</button>
+                </td>
+                
+                <td>
+                    <a href="{% url 'supprimer_personne' personne.id %}"><button class="btn btn-danger">Supprimer</button></a>
+                </td>
+                
+            </tr>
+
+            <div class="modal fade" id="modifierModal{{ personne.id }}" tabindex="-1" aria-labelledby="modifierModalLabel{{ personne.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="POST" action="{% url 'modifier_personne' personne.id %}">
+                            {% csrf_token %}
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ajouterClasseModalLabel">Modifier les références d'un employé</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="nom" class="form-label">Nom </label>
+                                    <input type="text" class="form-control" id="nom" name="nom" value="{{personne.nom}}">
+                                </div>
+        
+                                <div class="mb-3">
+                                    <label for="prenom" class="form-label">Prénom </label>
+                                    <input type="text" class="form-control" id="prenom" name="prenom" value="{{personne.prenom}}">
+                                </div>
+        
+                                <div class="mb-3">
+                                    <label for="departement" class="form-label">Département </label>
+                                    <input type="text" class="form-control" id="departement" name="departement" value="{{personne.departement}}">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="poste" class="form-label">Poste </label>
+                                    <input type="text" class="form-control" id="poste" name="poste" value="{{personne.poste}}">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="telephone" class="form-label">Téléphone</label>
+                                    <input type="text" class="form-control" id="telephone" name="telephone" value="{{personne.telephone}}"required>
+                                </div>
+                        
+                                
+                        
+                               
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn btn-success">Modifier</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+        </tbody>
+    </table>
+
+    
+</div>
+
+</div>
+
+{% endblock %}
