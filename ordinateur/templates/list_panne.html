@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+    
+    
+                <!-- Begin Page Content -->
+               
+
+                <div class="container mt-5">
+                    <h2 style="background-color: #4e73df; color: white; text-align: center;">Liste de pannes enrégistrées</h2>
+                    <table class="table">
+                        <thead class="thead">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Panne</th>
+                                <th scope="col">Utilisateur</th>
+                                <th scope="col">Téléphone</th>
+                                <th scope="col">Statut</th>
+                                <th scope="col">Action</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for panne in Pannes %}
+                            <tr>
+                                <th scope="row">{{panne.date}}</th>
+                                <td>{{panne.intitule}}</td>
+                                <td>{{panne.utilisateur}}</td>
+                                <td>{{panne.telephone}}</td>
+                                <td>{{panne.statut}}</td>
+                                <td>
+                                    <td>
+                                        <a href="{% url 'repare' panne.pk %}"><button class="btn btn-success">Réparer</button></a>
+                                    </td>
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+                            
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="container mt-5">
+                    <h2 style="background-color: #4e73df; color: white; text-align: center;"> Liste de pannes réparer</h2>
+                    <table class="table">
+                        <thead class="thead">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Panne</th>
+                                <th scope="col">Utilisateur</th>
+                                <th scope="col">Téléphone</th>
+                                
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for panne in Pannes_hist %}
+                            <tr>
+                                <th scope="row">{{panne.date}}</th>
+                                <td>{{panne.intitule}}</td>
+                                <td>{{panne.utilisateur}}</td>
+                                <td>{{panne.telephone}}</td>
+                                
+                            </tr>
+
+                            {% endfor %}
+                            
+                            
+                        </tbody>
+                    </table>
+                </div>
+         
+            <!-- End of Main Content -->
+ {% endblock %}

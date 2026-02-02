@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">GESTION DES LICENCES</h1>
+            
+        </div>
+
+
+
+    </div>
+    <div class="container mt-5 col-8 rounded shadow">
+        <h2 style="background-color: #4e73df; color: white; text-align: center;" >NOUVELLES LICENCES</h2>
+        <form method="post">
+            {% csrf_token %}
+           
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Soumettre</button>
+        </form>
+    </div>
+
+    <div class="container mt-5" style="
+        .expiring-soon {
+            color: red;
+            font-weight: bold;
+        }"
+      >
+        <h2 style="background-color: #4e73df; color: white; text-align: center;">LISTES DES LICENCES KASPERKY</h2>
+        <table class="table">
+            <thead class="thead">
+                <tr>
+                    <th>Clés</th>
+                    <th>Nombre d'utilisateur</th>
+                    <th>Date d'expiration</th>
+                    <th>Actions</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for licence in licences %}
+                    <tr class="{% if licence.is_expiring_soon %}expiring-soon{% endif %}">
+                        <td>{{ licence.cle.upper }}</td>
+                        <td>{{ licence.uses_nbr }}</td>
+                        <td>{{ licence.expiration_date }}</td>
+                        <td>
+                            <form method="post" action="{% url 'toggle_visibility' licence.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">
+                                    Supprimer
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+               
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
