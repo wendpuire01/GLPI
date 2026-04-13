@@ -1,4 +1,4 @@
-# GMI
+# GLPI
 # Gestion de Parc Informatique (IT Asset Management)
 
 
